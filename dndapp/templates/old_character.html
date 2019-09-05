@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-lg" id='char-info'>
+        <div class="jumbotron">
+            <h1>{{character.name}}</h1>
+            <p class="lead">{{character.race}} {{character.char_class}}</p>
+            <hr class="my-6">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="{{ image_file }}" class="rounded-circle account-img">
+                </div>
+                <div class="col-sm">
+                    <p>{{character.gender}}, {{character.age}} years old<p>
+                    <p>{{ character.short_bio }}<p>
+                </div>
+            </div>
+            <hr class="my-6">
+                <div class="row" id="inventory">
+                    <div class="col-sm-4 table-wrapper-scroll-y my-custom-scrollbar" id="item-div">
+                        <h6>INVENTORY</h6>
+                        <table class="table table-sm table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col">Item</th>
+                              <th scope="col">Quantity</th>
+                            </tr>
+                          </thead>
+                        </table>
+                    </div>
+                <div class="col-sm col-auto" id="quick-notes">
+                    <h6>NOTES</h6>
+                    <div class="form-group">
+                        <textarea class="form-control form-control-lg"></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-6">
+            <div class="content-section" contenteditable="true">
+                <h6>CHARACTER BACKGROUND</h6>
+                <p>{{character.long_bio}}</p>
+            </div>
+        </div>
+    </div>
+    <!-- character stats -->
+    <div class="col-lg" id='char-stats'>
+        <div class="jumbotron">
+            <h3>Statistics</h3>
+            <hr class="my-6">
+            <div class="row">
+                <div class="col-sm-auto" id="stat-name">
+                    <ul>
+                        <h6>ABILITY SCORE</h6>
+                        <li>Strength</li>
+                        <li>Constitution</li>
+                        <li>Dexterity</li>
+                        <li>Wisdom</li>
+                        <li>Intelligence</li>
+                        <li>Charisma</li>
+                    </ul>
+                </div>
+                <div class="col-sm-auto" id="stat-value">
+                    <ul>
+                        <h6>VALUE</h6>
+                        <li>{{character.strength}}</li>
+                        <li>{{character.constitution}}</li>
+                        <li>{{character.dexterity}}</li>
+                        <li>{{character.wisdom}}</li>
+                        <li>{{character.intelligence}}</li>
+                        <li>{{character.charisma}}</li>
+                    </ul>
+                </div>
+                <div class="col-sm-auto" id="stat-bonus">
+                    <ul>
+                        <h6>MODIFIER</h6>
+                        <li>{{ modifiers.strength }}</li>
+                        <li>{{ modifiers.constitution }}</li>
+                        <li>{{ modifiers.dexterity }}</li>
+                        <li>{{ modifiers.wisdom }}</li>
+                        <li>{{ modifiers.intelligence }}</li>
+                        <li>{{ modifiers.charisma }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="col-sm" id='col2'>
+    {% for char in character_list %}
+    {% if loop.index0 % 3 == 0 %}
+    <div class="card-group row">
+    {% endif %}
+        <div class="card" style="max-width: 15rem;"">
+            <img src="{{ url_for('static', filename='profile_pics/default.jpg') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <a class="card-title" href="{{ url_for('character', character_id=char.id) }}">{{char.name}}</a>
+                <p class="card-text">{{char.race}} {{char.char_class}}</p>
+                <p class="card-text"><small class="text-muted">Created by {{char.creator.username}}</small></p>
+            </div>
+        </div>
+    {% if loop.index0 % 3 == 2 or loop.last %}
+    </div>
+    {% endif %}
+    {% endfor %}
+    </div>
+{% endblock content %}
+
+
+<!-- The loop.last clause should close the last row even
+if there were less than 3 items. <div> should start
+when loop.index0 gives 0 as the remainder and should
+end when 2 is the remainder.
+Another alternative would be to group the items into rows
+before passing them into the template, then you can just
+issue two for-loops one inside the other.-->

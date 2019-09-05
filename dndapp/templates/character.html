@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md" id='char-info'>
+        <form method="POST" enctype="mulitpart/form-data"> <!--action="{{ url_for('character', character_id=character.id) }}"-->
+            {{ form.hidden_tag() }}
+            {# form9.csrf_token #}
+            <div class="jumbotron">
+                <h1>{{character.name}}</h1>
+                <p class="lead">{{character.race}} {{character.char_class}}</p>
+                <hr class="my-6">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="{{ image_file }}" class="rounded-circle account-img">
+                        <div class="form-group">
+                            {{ form.picture(class="form-control-file") }}
+                            {% if form.picture.errors %}
+                                {% for error in form.picture.errors %}
+                                    <span class="text-danger">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <p>{{character.age}} year old {{character.gender}}<p>
+                        <p>{{character.short_bio}}<p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="hp">
+                        <h6>HIT POINTS</h6>
+                        <h6>{{character.current_hp}} / {{character.hit_points}}</h6>
+                        <div class="form-group col-sm" id="hp_change-field">
+                            {% if form.hp_change.errors %}
+                                {{ form.hp_change(class="form-control form-control-md is-invalid", placeholder="0") }}
+                                <div class="invalid-feedback">
+                                    <span>{{ form.hp_change.errors[1] }}</span>
+                                    <!-- {% for error in form.hp_change.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %} -->
+                                </div>
+                            {% else %}
+                                {{ form.hp_change(class="form-control form-control-md", placeholder="0") }}
+                            {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs">
+                                <!-- <input class="btn btn-success mr-2 ml-3" type="submit" name="heal-submit" value="Heal"> -->
+                                {{ form.heal_submit(class="btn btn-success mr-2 ml-3") }}
+                            </div>
+                            <div class="col-xs">
+                                <!-- <input class="btn btn-danger" type="submit" name="dmg-submit" value="Damage"> -->
+                                {{ form.dmg_submit(class="btn btn-danger") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6">
+                <div class="row">
+                    <div class="col" id="notes">
+                        <h6>NOTES</h6>
+                        <fieldset class="form-group">
+                            {% if form.notes.errors %}
+                                {{ form.notes(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.notes.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.notes(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </fieldset>
+                    </div>
+                </div>
+                <hr class="my-6">
+                <h6>CHARACTER BACKGROUND</h6>
+                <fieldset class="form-row">
+                    <div class="form-group col" id="long-bio">
+                        {% if form.long_bio.errors %}
+                            {{ form.long_bio(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.long_bio.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.long_bio(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    {{ form.save(class="btn btn-info") }}
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- character stats -->
+    <div class="col-lg" id='char-stats'>
+        <div class="jumbotron">
+            <h3>Statistics</h3>
+            <hr class="my-6">
+            <div class="row">
+                <div class="col-sm-auto" id="stat-name">
+                    <ul>
+                        <h6>ABILITY SCORE</h6>
+                        <li>Strength</li>
+                        <li>Constitution</li>
+                        <li>Dexterity</li>
+                        <li>Wisdom</li>
+                        <li>Intelligence</li>
+                        <li>Charisma</li>
+                    </ul>
+                </div>
+                <div class="col-sm-auto" id="stat-value">
+                    <ul>
+                        <h6>VALUE</h6>
+                        <li>{{character.strength}}</li>
+                        <li>{{character.constitution}}</li>
+                        <li>{{character.dexterity}}</li>
+                        <li>{{character.wisdom}}</li>
+                        <li>{{character.intelligence}}</li>
+                        <li>{{character.charisma}}</li>
+                    </ul>
+                </div>
+                <div class="col-sm-auto" id="stat-bonus">
+                    <ul>
+                        <h6>MODIFIER</h6>
+                        <li>{{ modifiers.strength }}</li>
+                        <li>{{ modifiers.constitution }}</li>
+                        <li>{{ modifiers.dexterity }}</li>
+                        <li>{{ modifiers.wisdom }}</li>
+                        <li>{{ modifiers.intelligence }}</li>
+                        <li>{{ modifiers.charisma }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

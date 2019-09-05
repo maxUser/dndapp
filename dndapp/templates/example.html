@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="row">
+        <!-- left sidebar -->
+        <div class="col-sm-2" id='col1'>
+            <div class="content-section">
+                <h4>Characters</h4>
+                    <ul class="list-group py-0">
+                        <a href="#" class="list-group-item list-group-item-action active">Muradin Bronzebeard</a>
+                        <a href="#" class="list-group-item list-group-item-action">Character 2</a>
+                        <a href="#" class="list-group-item list-group-item-action">Character 3</a>
+                        <a href="#" class="list-group-item list-group-item-action">Character 4</a>
+                    </ul>
+            </div>
+            <button type="button" class="btn btn-dark">Create</button>
+        </div>
+        <!-- character info -->
+        <div class="col-sm-6" id='col2'>
+            <div class="jumbotron">
+                <h1>Muradin Bronzebeard</h1>
+                <p class="lead">Dwarf Paladin</p>
+                <hr class="my-6">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="{{ image_file }}" class="rounded-circle account-img">
+                    </div>
+                    <div class="col-sm">
+                        <p>Male, 112 years old<p>
+                        <p>King of Frostborn. Founding member of the Explorers' Guild. Brother of King Magni Bronzebeard.<p>
+                    </div>
+                </div>
+                <hr class="my-6">
+                    <div class="row" id="item-notes">
+                        <div class="col-sm-4 table-wrapper-scroll-y my-custom-scrollbar" id="item-div">
+                            <h6>INVENTORY</h6>
+                            <table class="table table-sm table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Item</th>
+                                  <th scope="col">Quantity</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td scope="row">Gold</td>
+                                  <td>56g 6s 32c</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Rope</td>
+                                  <td>50 ft</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Mace</td>
+                                  <td>1</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Mace</td>
+                                  <td>1</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Mace</td>
+                                  <td>1</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Mace</td>
+                                  <td>1</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Mace</td>
+                                  <td>1</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Flint</td>
+                                  <td>1</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Flask</td>
+                                  <td>4</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Crown</td>
+                                  <td>1</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Knife</td>
+                                  <td>1</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </div>
+                    <div class="col-sm col-auto" id="quick-notes">
+                        <h6>NOTES</h6>
+                        <div class="form-group">
+                            <textarea class="form-control form-control-lg"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6">
+                <div class="content-section">
+                    <h6>CHARACTER BACKGROUND</h6>
+                    <p>During the Second War, Muradin served as official liaison between Lordaeron and Khaz Modan, and accompanied the Alliance armies shortly before the battles at Blackrock Spire and the Dark Portal. During that time period he grew close to the Royal Family, and befriended the young Prince Arthas. As Arthas grew up, Muradin took it upon himself to teach the lad all he knew about fighting with blades and the two became close companions on many adventures.
+                        Muradin was also one of the founding members of the dwarven Explorers' Guild, which was dedicated to exploration and archeology across the world. In his travels, Muradin visited Northrend and became fascinated with the desolate continent. He returned to it often, observing its ferocious natives and sketching its ruined architecture. It was during one expedition to Northrend in search of the runeblade Frostmourne that Muradin met Arthas for the final time.
+
+                        In his obsession to destroy the Dreadlord Mal'ganis, Arthas had Muradin lead him to Frostmourne, betraying his own men in the process.
+
+                        The older and wiser Muradin was distressed by the change he saw in the young prince, but Arthas refused to listen to his counsel. Muradin gave a final desperate warning about the cursed blade, and was thought then to become its first victim when the ice imprisoning it shattered and impaled him. It seems that there are some accounts which claim it was Arthas who caused Muradin's "death" when claiming the sword (which is true from a certain point-of-view if one stops to consider that it was Arthas who caused the explosion and didn't care in the least). But unbeknownst to everyone Muradin had survived his wounds and currently suffers from amnesia.</p>
+                </div>
+            </div>
+        </div>
+        <!-- character stats -->
+        <div class="col-sm" id='col3'>
+            <div class="jumbotron">
+                <h3>Statistics</h3>
+                <hr class="my-6">
+                <div class="row">
+                    <div class="col-sm-auto" id="stat-name">
+                        <ul>
+                            <h6>ATTRIBUTE</h6>
+                            <li>Strength</li>
+                            <li>Constitution</li>
+                            <li>Dexterity</li>
+                            <li>Wisdom</li>
+                            <li>Intelligence</li>
+                            <li>Charisma</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-auto" id="stat-value">
+                        <ul>
+                            <h6>VALUE</h6>
+                            <li>14</li>
+                            <li>15</li>
+                            <li>11</li>
+                            <li>12</li>
+                            <li>11</li>
+                            <li>14</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-auto" id="stat-bonus">
+                        <ul>
+                            <h6>BONUS</h6>
+                            <li>2</li>
+                            <li>2</li>
+                            <li>0</li>
+                            <li>1</li>
+                            <li>0</li>
+                            <li>2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

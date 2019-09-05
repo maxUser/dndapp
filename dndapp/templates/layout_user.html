@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-2" id="col1">
+            <div class="content-section" id="character-list">
+                <h4>Characters</h4>
+                    <ul class="list-group">
+                        {% for char in character_list %}
+                            <a href="{{ url_for('character', character_id=char.id) }}" class="list-group-item list-group-item-action">{{char.name}}</a>
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
+    {% block subcontent %}{% endblock subcontent %}
+    </div>
+{% endblock content %}
