@@ -1,9 +1,9 @@
-from PIL import Image # for resizing images
 import os
 import secrets
+from PIL import Image # for resizing images
 from flask import render_template, url_for, flash, redirect, request, abort
 from dndapp import app, db, bcrypt
-from dndapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, CreateForm, UpdateForm
+from dndapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, CreateForm, UpdateCharacterForm
 from dndapp.models import User, Character
 from flask_login import login_user, current_user, logout_user, login_required
 from flask import send_from_directory
@@ -28,24 +28,31 @@ def home():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-	if current_user.is_authenticated:
-		return redirect(url_for('create'))
-	form = LoginForm()
-	if form.validate_on_submit():
-		user = User.query.filter_by(email=form.email.data).first()
-		# user.password the user's password in the db
-		if user and bcrypt.check_password_hash(user.password, form.password.data):
-			login_user(user, remember=form.remember.data)
-			# next_page = request.args.get('next') # args is a dictionary
-			# return redirect(next_page) if next_page else redirect(url_for('create'))
-			return redirect(url_for('home'))
-		else:
-			flash(u'Login Unsuccessful. Please check email and password', 'text-danger')
-	return render_template('login.html', title='login', form=form)
+    if current_user.is_authenticated:
+        return redirect(url_for('create'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        # user.password the user's password in the db
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            # next_page = request.args.get('next') # args is a dictionary
+            # return redirect(next_page) if next_page else redirect(url_for('create'))
+            return redirect(url_for('home'))
+        else:
+            flash(u'Login Unsuccessful. Please check email and password', 'text-danger')
+    else:
+        print(form.errors)
+    return render_template('login.html', title='login', form=form)
 
 @app.route("/about")
 def about():
 	return render_template('about.html', title='About')
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -81,8 +88,8 @@ def create():
 		db.session.commit()
 		flash(f'{form.name.data} has been created!', 'success')
 		return redirect(url_for('home'))
-	# else:
-	# 	flash(form.errors, 'fail')
+	else:
+		print(form.errors)
 	return render_template('create.html', title='New Character', form=form, legend='New Character')
 
 @app.route("/character/<int:character_id>", methods=['GET', 'POST'])
@@ -92,26 +99,26 @@ def character(character_id):
     if character.creator != current_user:
         abort(403)
 
-    form = UpdateForm()
+    form = UpdateCharacterForm()
 
     modifiers = score_modifier(character)
     if character.current_hp == None:
         character.current_hp = character.hit_points
 
-
     if form.hp_change.data is None:
         form.hp_change.data = 0
+
+    print('form.picture.data: {}'.format(form.picture.data))
 
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_character_picture(form.picture.data)
-            current_user.image_file = picture_file
-            
+            character.image_file = picture_file
+
         if form.heal_submit.data:
             character.current_hp = character.current_hp + form.hp_change.data
         elif form.dmg_submit.data:
             character.current_hp = character.current_hp - form.hp_change.data
-
 
         character.notes = form.notes.data
         character.long_bio = form.long_bio.data
@@ -124,17 +131,13 @@ def character(character_id):
         form.notes.data = character.notes
         form.long_bio.data = character.long_bio
     else:
-        print(form.errors)
+        print('Errors', form.errors)
 
-    image_file = url_for('static', filename='character_pics/' + current_user.image_file)
+    image_file = url_for('static', filename='character_pics/' + character.image_file)
+    print(image_file)
     return render_template('character.html', title=character.name,
     						character=character, image_file=image_file,
     						form=form, modifiers=modifiers)
-
-@app.route("/logout")
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
 
 # save the user's uploaded image to the file system (in profile_pics)
 def save_profile_picture(form_picture):
@@ -176,7 +179,6 @@ def save_character_picture(form_picture):
     # ########
 
     i.save(picture_path)
-
     return picture_fn
 
 @app.route("/account", methods=['GET', 'POST'])

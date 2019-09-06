@@ -79,7 +79,7 @@ class CreateForm(FlaskForm):
     notes = TextAreaField(u'Notes')
     submit = SubmitField('Create')
 
-class UpdateForm(FlaskForm):
+class UpdateCharacterForm(FlaskForm):
     save = SubmitField('Save')
     long_bio = TextAreaField('Background')
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
