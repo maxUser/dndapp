@@ -149,5 +149,17 @@
     padding-left: 0px;
 }
 #hp_change-field .form-control {
-    max-width: 83px
+    max-width: 83px;
+}
+
+#edit-pic-btn {
+    position: absolute;
+    margin-top: -20px;
+    margin-left: -10px;
+}
+
+#char-img {
+    border: 1px dotted;
+    margin-top: -10px;
+    padding-top: -20px;
 }

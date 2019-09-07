@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="em" dir="ltr"> <!-- ltr=left-to-right -->
     <head>
+        <!-- <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script> -->
         <!-- Required meta tags from Bootstrap -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,7 +9,6 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-5.10.2-web/css/all.css') }}">
-        <meta charset="utf-8">
         {% if title %}
             <title> {{ title }} </title>
         {% else %}
@@ -73,6 +73,7 @@
             </nav>
         </header>
         <main role="main" class="container-fluid">
+
             <!-- {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}

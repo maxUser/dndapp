@@ -74,9 +74,13 @@ def register():
 @app.route("/create", methods=['GET', 'POST'])
 @login_required
 def create():
-	form = CreateForm()
-	if form.validate_on_submit():
-		character = Character(creator=current_user, name=form.name.data, race=form.race.data,
+    form = CreateForm()
+    if form.validate_on_submit():
+        print(form.gender.data)
+        if not form.gender.data:
+            form.gender.data = 'N/A'
+        print(form.gender.data)
+        character = Character(creator=current_user, name=form.name.data, race=form.race.data,
 							char_class=form.char_class.data, gender=form.gender.data,
 							age=form.age.data, strength=form.strength.data,
 							constitution=form.constitution.data, dexterity=form.dexterity.data,
@@ -84,13 +88,13 @@ def create():
 							charisma=form.charisma.data, long_bio=form.long_bio.data,
 							short_bio=form.short_bio.data, notes=form.notes.data,
                             armour_class=form.armour_class.data, hit_points=form.hit_points.data)
-		db.session.add(character)
-		db.session.commit()
-		flash(f'{form.name.data} has been created!', 'success')
-		return redirect(url_for('home'))
-	else:
-		print(form.errors)
-	return render_template('create.html', title='New Character', form=form, legend='New Character')
+        db.session.add(character)
+        db.session.commit()
+        flash(f'{form.name.data} has been created!', 'success')
+        return redirect(url_for('home'))
+    else:
+        print(form.errors)
+    return render_template('create.html', title='New Character', form=form, legend='New Character')
 
 @app.route("/character/<int:character_id>", methods=['GET', 'POST'])
 @login_required
@@ -108,7 +112,7 @@ def character(character_id):
     if form.hp_change.data is None:
         form.hp_change.data = 0
 
-    print('form.picture.data: {}'.format(form.picture.data))
+    # print('form.picture.data: {}'.format(form.picture.data))
 
     if form.validate_on_submit():
         if form.picture.data:
@@ -134,7 +138,6 @@ def character(character_id):
         print('Errors', form.errors)
 
     image_file = url_for('static', filename='character_pics/' + character.image_file)
-    print(image_file)
     return render_template('character.html', title=character.name,
     						character=character, image_file=image_file,
     						form=form, modifiers=modifiers)

@@ -1,20 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
+<script type="text/javascript">
+    function myFunction() {
+        var x = document.getElementById("upload-charpic-btn");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
 <div class="row">
     <div class="col-md" id='char-info'>
         <form method="POST" enctype="multipart/form-data"> <!--action="{{ url_for('character', character_id=character.id) }}"-->
             {{ form.hidden_tag() }}
-            {# form9.csrf_token #}
             <div class="jumbotron">
                 <h1>{{character.name}}</h1>
                 <p class="lead">{{character.race}} {{character.char_class}}</p>
                 <hr class="my-6">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <i class="fab fa-500px"></i>
-                        <img src="{{ image_file }}" class="rounded-circle account-img">
+                    <div class="col-sm-4" id="image-section">
+                        <button type="button" class="btn" id="edit-pic-btn" onclick="myFunction()"><i class="far fa-edit"></i></button>
+                        <img src="{{ image_file }}" class="rounded-circle account-img" id="char-img">
                         <fieldset class="form-group">
-                            {{ form.picture(class="form-control-file-sm") }}
+                            {{ form.picture(class="form-control-file-sm", id="upload-charpic-btn", style="display: none;") }}
                             {% if form.picture.errors %}
                                 {% for error in form.picture.errors %}
                                     <span class="text-danger">{{ error }}</span>
@@ -23,7 +32,7 @@
                         </fieldset>
                     </div>
                     <div class="col">
-                        <p>{{character.age}} year old {{character.gender}}<p>
+                        <p>Age: {{character.age}}&emsp;Gender: {{character.gender}}<p>
                         <p>{{character.short_bio}}<p>
                     </div>
                 </div>
