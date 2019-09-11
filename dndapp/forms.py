@@ -73,7 +73,7 @@ class CreateForm(FlaskForm):
     wisdom = IntegerField(u'Wis', validators=[DataRequired()])
     intelligence = IntegerField(u'Int', validators=[DataRequired()])
     charisma = IntegerField(u'Cha', validators=[DataRequired()])
-    short_bio = StringField(u'Short Bio', validators=[Length(max=150)])
+    short_bio = TextAreaField(u'Short Bio', validators=[Length(max=250)])
     long_bio = TextAreaField(u'Background', validators=[DataRequired()])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     notes = TextAreaField(u'Notes')
@@ -82,6 +82,7 @@ class CreateForm(FlaskForm):
 class UpdateCharacterForm(FlaskForm):
     save = SubmitField('Save')
     long_bio = TextAreaField('Background')
+    short_bio = TextAreaField('Quick Info')
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     notes = TextAreaField('Notes')
     current_hp = IntegerField()

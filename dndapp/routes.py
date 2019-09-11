@@ -120,7 +120,11 @@ def character(character_id):
             character.image_file = picture_file
 
         if form.heal_submit.data:
-            character.current_hp = character.current_hp + form.hp_change.data
+            if character.current_hp + form.hp_change.data > character.hit_points:
+                character.current_hp = character.hit_points
+            else:
+                character.current_hp = character.current_hp + form.hp_change.data
+
         elif form.dmg_submit.data:
             character.current_hp = character.current_hp - form.hp_change.data
 
@@ -134,6 +138,7 @@ def character(character_id):
     elif request.method == 'GET':
         form.notes.data = character.notes
         form.long_bio.data = character.long_bio
+        form.short_bio.data = character.short_bio
     else:
         print('Errors', form.errors)
 
@@ -172,7 +177,7 @@ def save_character_picture(form_picture):
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/character_pics', picture_fn)
     # resize image
-    output_size = (150, 150)
+    output_size = (220, 220)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
 

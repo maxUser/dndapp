@@ -34,7 +34,11 @@ class Character(db.Model):
     wisdom = db.Column(db.Integer, nullable=False)
     intelligence = db.Column(db.Integer, nullable=False)
     charisma = db.Column(db.Integer, nullable=False)
-    short_bio = db.Column(db.String(150), nullable=True)
+    # ####
+    # SHORT BIO
+    # height, weight, alignment, bonds, flaws, languages
+    # ####
+    short_bio = db.Column(db.Text, nullable=True)
     long_bio = db.Column(db.Text, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default-char.png')
     notes = db.Column(db.Text, nullable=True)
