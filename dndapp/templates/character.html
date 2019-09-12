@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <script type="text/javascript">
-    function myFunction() {
+    function showCharPicUploadBtn() {
         var x = document.getElementById("upload-charpic-btn");
         if (x.style.display === "none") {
             x.style.display = "block";
@@ -9,8 +9,15 @@
             x.style.display = "none";
         }
     }
+    function showCharacterBackground() {
+        var x = document.getElementById("long-bio-form");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
 </script>
-<!-- <div class="container"> -->
 <div class="row">
     <div class="col-md-8" id='char-info'>
         <form method="POST" enctype="multipart/form-data"> <!--action="{{ url_for('character', character_id=character.id) }}"-->
@@ -20,10 +27,10 @@
                 <p class="lead">{{character.race}} {{character.char_class}}</p>
                 <hr class="my-6">
                 <div class="row" id="row-1">
-                    <div class="col-md-4" id="image-section">
-                        <button type="button" class="btn" id="edit-pic-btn" onclick="myFunction()"><i class="far fa-edit"></i></button>
+                    <div class="col-lg-4" id="image-section">
+                        <button type="button" class="btn" id="edit-pic-btn" onclick="showCharPicUploadBtn()"><i class="far fa-edit"></i></button>
                         <img src="{{ image_file }}" class="rounded-circle char-img" id="char-img">
-                        <fieldset class="form-group">
+                        <fieldset class="form-group" id="upload-charpic-div">
                             {{ form.picture(class="form-control-file-sm", id="upload-charpic-btn", style="display: none;") }}
                             {% if form.picture.errors %}
                                 {% for error in form.picture.errors %}
@@ -32,7 +39,7 @@
                             {% endif %}
                         </fieldset>
                     </div>
-                    <div class="col-md" id="quick-notes">
+                    <div class="col-lg" id="quick-notes">
                         <div>
                             <p>Age: {{character.age}}&emsp;Gender: {{character.gender}}<p>
                         </div>
@@ -53,10 +60,10 @@
                     </div>
                 </div>
                 <div class="row" id="hp">
-                    <div class="col">
-                        <h6>HIT POINTS</h6>
+                    <div class="col-md">
+                        {{ form.current_hp.label(class="form-control-label", id="hp-text") }}
                         <h6>{{character.current_hp}} / {{character.hit_points}}</h6>
-                        <div class="form-group col-sm" id="hp_change-field">
+                        <div class="form-group col-md" id="hp_change-field">
                             {% if form.hp_change.errors %}
                                 {{ form.hp_change(class="form-control form-control-md is-invalid", placeholder="0") }}
                                 <div class="invalid-feedback">
@@ -84,7 +91,7 @@
                 <hr class="my-6">
                 <div class="row">
                     <div class="col" id="notes">
-                        <h6>NOTES</h6>
+                        {{ form.notes.label(class="form-control-label", id="notes-text") }}
                         <fieldset class="form-group">
                             {% if form.notes.errors %}
                                 {{ form.notes(class="form-control form-control-lg is-invalid") }}
@@ -100,18 +107,19 @@
                     </div>
                 </div>
                 <hr class="my-6">
-                <h6>CHARACTER BACKGROUND</h6>
+                {{ form.long_bio.label(class="form-control-label", id="long-bio-text") }}
+                <button type="button" class="btn" onclick= "showCharacterBackground()" id="expand-background-btn"><i class="fas fa-expand"></i></button>
                 <fieldset class="form-row">
                     <div class="form-group col" id="long-bio">
                         {% if form.long_bio.errors %}
-                            {{ form.long_bio(class="form-control form-control-lg is-invalid") }}
+                            {{ form.long_bio(class="form-control form-control-lg is-invalid", id="long-bio-form", readonly=true, style="display: none;") }}
                             <div class="invalid-feedback">
                                 {% for error in form.long_bio.errors %}
                                     <span>{{ error }}</span>
                                 {% endfor %}
                             </div>
                         {% else %}
-                            {{ form.long_bio(class="form-control form-control-lg", readonly=true) }}
+                            {{ form.long_bio(class="form-control form-control-lg", readonly=true, id="long-bio-form", style="display: none;") }}
                         {% endif %}
                     </div>
                 </fieldset>
@@ -173,5 +181,4 @@
         </div>
     </div>
 </div>
-<!-- </div> -->
 {% endblock content %}
