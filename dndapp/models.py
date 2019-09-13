@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     characters = db.relationship('Character', backref='creator', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+        return f"User('{self.username}', '{self.email}')"
 
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -36,7 +36,7 @@ class Character(db.Model):
     charisma = db.Column(db.Integer, nullable=False)
     # ####
     # SHORT BIO
-    # height, weight, alignment, bonds, flaws, languages
+    # i.e. height, weight, alignment, bonds, flaws, languages
     # ####
     short_bio = db.Column(db.Text, nullable=True)
     long_bio = db.Column(db.Text, nullable=False)
