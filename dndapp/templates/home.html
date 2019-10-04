@@ -6,9 +6,10 @@
     <div class="card-group row">
     {% endif %}
         <div class="card" style="max-width: 15rem;"">
-            <img src="{{ url_for('static', filename='profile_pics/default.jpg') }}" class="card-img-top" alt="...">
+            {% set fname = 'character_pics/' + char.image_file %}
+            <img src="{{ url_for('static', filename=fname) }}" class="card-img-top" alt="...">
             <div class="card-body">
-                <a class="card-title" href="{{ url_for('character', character_id=char.id) }}">{{char.name}}</a>
+                <a class="card-title" href="{{ url_for('characters.character', character_id=char.id) }}">{{char.name}}</a>
                 <p class="card-text">{{char.race}} {{char.char_class}}</p>
                 <p class="card-text"><small class="text-muted">Created by {{char.creator.username}}</small></p>
             </div>

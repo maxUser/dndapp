@@ -111,6 +111,10 @@
     /* border: 1px solid; */
 }
 
+#ageNgender {
+    margin-bottom: 5px;
+}
+
 #notes .form-group .form-control {
     font-size: 14px;
     height: 230px;

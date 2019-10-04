@@ -20,7 +20,7 @@
 </script>
 <div class="row">
     <div class="col-md-8" id='char-info'>
-        <form method="POST" enctype="multipart/form-data"> <!--action="{{ url_for('character', character_id=character.id) }}"-->
+        <form method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <div class="jumbotron">
                 <h1>{{character.name}}</h1>
@@ -39,9 +39,12 @@
                             {% endif %}
                         </fieldset>
                     </div>
-                    <div class="col-lg" id="quick-notes">
-                        <div>
-                            <p>Age: {{character.age}}&emsp;Gender: {{character.gender}}<p>
+                    <div class="col-lg" id="quick-info">
+                        <div id="level">
+                            <h6>Level: ??</h6>
+                        </div>
+                        <div id="ageNgender">
+                            Age: {{character.age}}&emsp;Gender: {{character.gender}}
                         </div>
                         <div id="short-bio">
                             <fieldset>
@@ -53,7 +56,7 @@
                                         {% endfor %}
                                     </div>
                                 {% else %}
-                                    {{ form.short_bio(class="form-control form-control-lg") }}
+                                    {{ form.short_bio(class="form-control form-control-lg", placeholder="i.e. height, weight, alignment, bonds, flaws, languages") }}
                                 {% endif %}
                             </fieldset>
                         </div>

@@ -2,19 +2,32 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from sqlalchemy import create_engine
+from flask_mail import Mail
+from dndapp.config import Config
 
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = '87511cc2acaa9d0e6430183937360cf4'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 # Extensions
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
-login_manager.login_message_category = 'text-warning'
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
+login_manager.login_view = 'users.login'
+login_manager.login_message_category = 'info'
+mail = Mail()
 
-from dndapp import routes
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
+
+    from dndapp.users.routes import users
+    from dndapp.characters.routes import characters
+    from dndapp.main.routes import main
+    app.register_blueprint(users)
+    app.register_blueprint(characters)
+    app.register_blueprint(main)
+
+    return app
