@@ -31,12 +31,12 @@
                                 <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{ url_for('characters.create') }}">Create</a>
+                                <a class="nav-link" id="nav-to-create" href="{{ url_for('characters.create') }}">Create</a>
                             </li>
                             {% if current_user.is_authenticated %}
                             <li class="nav-item active">
                                 <div class="dropdown">
-                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="character-dropdown-btn">
+                                    <button type="button"  id="character-dropdown-btn" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
                                         Characters
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="dropdownMenuButton" id="character-dropdown">
@@ -52,17 +52,17 @@
                         <div class="navbar-nav">
                             {% if current_user.is_authenticated %}
                                 <div class="dropdown">
-                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" id="account-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
                                         {{ current_user.username }}
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="{{ url_for('users.account') }}">Account</a>
-                                        <a class="dropdown-item" href="{{ url_for('users.logout') }}">Logout</a>
+                                        <a class="dropdown-item" id="account-ddbtn" href="{{ url_for('users.account') }}">Account</a>
+                                        <a class="dropdown-item" id="account-logout-ddbtn" href="{{ url_for('users.logout') }}">Logout</a>
                                     </div>
                                 </div>
                             {% else %}
-                                <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
-                                <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
+                                <a class="nav-item nav-link" id="account-login-ddbtn" href="{{ url_for('users.login') }}">Login</a>
+                                <a class="nav-item nav-link" id="account-register-ddbtn" href="{{ url_for('users.register') }}">Register</a>
                             {% endif %}
                         </div>
                     </div>

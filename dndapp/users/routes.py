@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask import render_template, url_for, flash, redirect, request, Blueprint, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from dndapp import db, bcrypt
 from dndapp.models import User, Character
@@ -126,3 +126,16 @@ def reset_token(token):
         flash('Your password has been updated. You may now log in.', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
+
+@users.route('/user/<string:username>/delete', methods=['POST'])
+@login_required
+def delete_user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    if current_user.username != user.username:
+        print(current_user.username)
+        print(user.username)
+        abort(403)
+    db.session.delete(user)
+    db.session.commit()
+    flash('User deleted', 'success')
+    return redirect(url_for('main.home'))
